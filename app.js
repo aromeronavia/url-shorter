@@ -2,9 +2,14 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const PORT = 3000;
+const DOMAIN = 'http://localhost:3000/';
 app.use(bodyParser.urlencoded({extended: false}));
 
 const createShortenedURL = require('./create-shortened-url');
+
+app.get('/favicon.ico', function(req, res) {
+  res.sendStatus(200);
+});
 
 app.get('/', (req, res) => {
   res.sendFile(buildRouteURL('index.html'));
@@ -12,6 +17,7 @@ app.get('/', (req, res) => {
 
 app.post('/short', (req, res) => {
   const {url} = req.body;
+  console.log('Shorting url', url);
   createShortenedURL(url)
     .then(result => res.status(200).json(result))
     .catch(_buildError(res));

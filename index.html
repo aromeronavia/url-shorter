@@ -13,9 +13,21 @@
   <body>
     <div class='flex'>
       <h1> 100tifico - Another url shortener </h1>
-      <input type='text' />
-      <button>Short URL!</button>
-      <textarea></textarea>
+      <input id='url-holder' type='text' />
+      <button id='short'> Short URL! </button>
+      <textarea id='textarea'></textarea>
     </div>
+
+  <script> 
+    $(document).ready(() => {
+      const url = $('#url-holder').val();
+      $('#short').click(() => {
+        $.post('/short', {url}, (data) => {
+          console.log(data);
+          $('textarea').val(`http://localhost:3000/${data.hash}`);
+        });
+      });
+    });
+  </script>
   </body>
 </html>

@@ -26,6 +26,9 @@
         $.post('/short', {url}, (data) => {
           console.log(data);
           $('textarea').val(`http://localhost:3000/${data.hash}`);
+        })
+        .error(() => {
+          $('textarea').val(`INVALID URL`);
         });
       });
     });

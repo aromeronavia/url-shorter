@@ -3,10 +3,10 @@ const database = require('./database');
 
 const createShortenedURL = url => {
   return new Promise((resolve, reject) => {
-    const hash = urlShortener(url);
-    database.searchForExistentHash(hash)
+    database.searchForOriginalURL(url)
       .then(result => {
         if (result) return resolve(result);
+        const hash = urlShortener(url);
         database.insertHashAndOriginalURL({url, hash})
           .then(resolve)
           .catch(error => {

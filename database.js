@@ -3,9 +3,12 @@ const pgp = require('pg-promise')();
 const db = pgp(connectionString);
 
 const database = {
+  searchForExistentHash: hash => {
+    return db.oneOrNone('SELECT * FROM short_url where hash=$1', hash);
+  },
   insertHashAndOriginalURL: args => {
-    return db.oneOrNone('INSERT INTO short_url (hash, original_url, visits)' +
-      'values (${hash}, ${originalURL}, 0)', args);
+    return db.one('INSERT INTO short_url (hash, original_url, visits)' +
+      'values (${hash}, ${url}, 0) RETURNING *', args);
   }
 };
 

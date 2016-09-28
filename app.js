@@ -12,8 +12,14 @@ app.get('/', (req, res) => {
 
 app.post('/short', (req, res) => {
   const {url} = req.body;
-  createShortenedURL(url);
+  createShortenedURL(url)
+    .then(result => res.status(200).json(result))
+    .catch(_buildError(res));
 });
+
+const _buildError = res => error => {
+  return res.status(500).json({error: error});
+};
 
 app.get('/admin', (req, res) => {
 

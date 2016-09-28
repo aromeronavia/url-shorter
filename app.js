@@ -9,7 +9,8 @@ app.get('/', (req, res) => {
 });
 
 app.post('/short', (req, res) => {
-
+  const {url} = req.body;
+  createShortenedUrl(url)
 });
 
 app.get('/admin', (req, res) => {

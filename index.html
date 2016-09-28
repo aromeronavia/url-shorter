@@ -20,8 +20,9 @@
 
   <script> 
     $(document).ready(() => {
-      const url = $('#url-holder').val();
       $('#short').click(() => {
+        const url = $('#url-holder').val();
+        console.log('URL SENDING', url);
         $.post('/short', {url}, (data) => {
           console.log(data);
           $('textarea').val(`http://localhost:3000/${data.hash}`);

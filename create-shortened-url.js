@@ -10,7 +10,7 @@ const createShortenedURL = url => {
         database.insertHashAndOriginalURL({url, hash})
           .then(resolve)
           .catch(error => {
-            console.log(error);
+            console.error(error);
             reject(error);
           });
       });

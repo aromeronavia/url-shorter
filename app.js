@@ -6,9 +6,25 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 const createShortenedURL = require('./create-shortened-url');
 const searchRedirectHash = require('./search-redirect-hash');
+const listUrls = require('./list-urls');
 
 app.get('/favicon.ico', function(req, res) {
   res.sendStatus(200);
+});
+
+app.get('/admin', (req, res) => {
+  console.log('/admin');
+  res.sendFile(buildRouteURL('admin.html'));
+});
+
+app.get('/admin/urls', (req, res) => {
+  console.log('/admin/urls');
+  listUrls()
+    .then(result => res.status(200).json({urls: result}))
+    .catch(error => {
+      console.log('/admin/urls error', error);
+      res.sendFile(buildRouteURL('index.html'));
+    });
 });
 
 app.get('/:hash', (req, res) => {
@@ -42,9 +58,6 @@ app.post('/short', (req, res) => {
 const _buildError = res => error => {
   return res.status(500).json({error: error});
 };
-
-app.get('/admin', (req, res) => {
-});
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);

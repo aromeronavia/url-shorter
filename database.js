@@ -3,11 +3,13 @@ const pgp = require('pg-promise')();
 const db = pgp(connectionString);
 
 const database = {
+  listUrls: () => {
+    return db.manyOrNone('SELECT * FROM short_url');
+  },
   searchForExistentHash: hash => {
     return db.oneOrNone('SELECT * FROM short_url where hash=$1', hash);
   },
   searchForOriginalURL: url => {
-    console.log(url);
     return db.oneOrNone('SELECT * FROM short_url where original_url=$1', url);
   },
   insertHashAndOriginalURL: args => {

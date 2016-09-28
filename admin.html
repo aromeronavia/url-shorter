@@ -1,0 +1,41 @@
+<html>
+  <style>
+    .flex {
+      display: flex;
+      justify-content: center;
+      margin: 0 auto;
+    }
+  </style>
+  <head>
+  <title> 100tifi.co </title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  </head>
+  <body>
+    <div class='flex'>
+      <h1> 100tifico - Another url shortener </h1>
+    </div>
+    <div class='flex'>
+      <table>
+        <tbody id='urls'>
+          <tr>
+            <td>Hash</td>
+            <td>Original URL</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  <script> 
+    $(document).ready(() => {
+      $.get('/admin/urls', (data) => {
+        const {urls} = data;
+        urls.map((record) => {
+          let newRow = '<tr><td>http://localhost:3000/' + record.hash + '</td>';
+          newRow += '<td>' + record.original_url + '</td></tr>';
+          console.log(newRow);
+          $('#urls').append(newRow);
+        });
+      });
+    });
+  </script>
+  </body>
+</html>
